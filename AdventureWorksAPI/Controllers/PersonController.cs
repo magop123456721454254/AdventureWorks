@@ -14,10 +14,11 @@ namespace AdventureWorksAPI.Controllers
             _personService = personService;
         }
 
-        [HttpGet("{amount}")]
-        public IActionResult GetPersons(int amount)
+        [HttpGet("{amount?}")]
+        public IActionResult GetPersons(int? amount)
         {
-            var persons = _personService.GetPersons(amount);
+            int take = amount ?? 5;
+            var persons = _personService.GetPersons(take);
             return Ok(persons);
         }
     }
