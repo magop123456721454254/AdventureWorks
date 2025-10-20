@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: AdventureWorksAPI/Dockerfile
+    container_name: adventureworks-api
+    environment:
+      # Use your local SQL Server; host.docker.internal works on Windows/Mac
+      ConnectionStrings__AdventureWorksConnection: "Server=host.docker.internal\\SQLEXPRESS;Database=AdventureWorks2016;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;"
+    ports:
+      - "5000:5000"
+    depends_on: []
+
+  frontend:
+    build:
+      context: .
+      dockerfile: adventureworks-ui/Dockerfile
+    container_name: adventureworks-ui
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: "http://localhost:5000" # React/Next can read this
