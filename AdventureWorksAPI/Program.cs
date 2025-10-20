@@ -9,6 +9,8 @@ builder.Services.AddDbContextFactory<AdventureWorksContext>(options =>
     options.UseSqlServer(
         "Server=localhost\\SQLEXPRESS;Database=AdventureWorks2016;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;"));
 
+builder.WebHost.UseUrls("http://localhost:5000");
+
 builder.Services.AddScoped<PersonService>();
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
@@ -32,6 +34,7 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
 app.UseCors("MyNextJSCORS");
 
 // Configure the HTTP request pipeline.
@@ -43,8 +46,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
-
-
 app.MapControllers();
 
 app.Run();
