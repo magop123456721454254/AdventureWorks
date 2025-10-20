@@ -1,29 +1,29 @@
 export class Person {
-    BusinessEntityId: number;
+    businessEntityId: number;
     PersonType?: string;
     Title?: string;
-    FirstName?: string;
+    firstName?: string;
     MiddleName?: string;
-    LastName?: string;
+    lastName?: string;
     Suffix?: string;
     EmailPromotion?: number;
 
     constructor(
-        BusinessEntityId: number,
+        businessEntityId: number,
         PersonType?: string,
         Title?: string,
-        FirstName?: string,
+        firstName?: string,
         MiddleName?: string,
-        LastName?: string,
+        lastName?: string,
         Suffix?: string,
         EmailPromotion?: number
     ) {
-        this.BusinessEntityId = BusinessEntityId;
+        this.businessEntityId = businessEntityId;
         this.PersonType = PersonType;
         this.Title = Title;
-        this.FirstName = FirstName;
+        this.firstName = firstName;
         this.MiddleName = MiddleName;
-        this.LastName = LastName;
+        this.lastName = lastName;
         this.Suffix = Suffix;
         this.EmailPromotion = EmailPromotion;
     }
