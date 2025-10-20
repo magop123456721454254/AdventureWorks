@@ -8,7 +8,7 @@ export default function PersonsPage() {
   const [persons, setPersons] = useState<Person[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:5201/api/person/500') // .NET API
+    fetch('http://localhost:5000/api/person/') // .NET API
       .then((res) => res.json())
       .then((data) => setPersons(data));
   }, []);
