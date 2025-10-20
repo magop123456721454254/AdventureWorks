@@ -5,6 +5,8 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// TEST COMMENT FOR FIRST PR
+
 builder.Services.AddDbContextFactory<AdventureWorksContext>(options =>
     options.UseSqlServer(
         "Server=localhost\\SQLEXPRESS;Database=AdventureWorks2016;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;"));
