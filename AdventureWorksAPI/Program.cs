@@ -25,10 +25,10 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("MyNextJSCORS",
+    options.AddPolicy("MyNextJSCssORS",
         policy =>
         {
-            policy
+            policyssssssssssssssssssssssss
                 .WithOrigins("http://localhost:3000")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
