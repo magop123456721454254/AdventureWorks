@@ -2,8 +2,7 @@
 using System;
 using System.Security.Cryptography;
 
-public class AdventureWorksContext : DbContext
-{
+public class AdventureWorksContext : DbCsssssssssssssss
     public AdventureWorksContext(DbContextOptions<AdventureWorksContext> options) : base(options) { }
 
     public DbSet<Person> DbSetOfPersons { get; set; }
