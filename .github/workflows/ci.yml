@@ -2,33 +2,62 @@ name: AdventureWorks CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main, develop ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main, develop ]
 
 jobs:
   backend:
-      name: Builds and analyzes .NET 
-      runs-on: ubuntu-latest
-      defaults:
-        run:
-          working-directory: AdventureWorksAPI
+    name: 🧩 Build & analyze .NET API
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: AdventureWorksAPI
 
-      steps:
-        - name: Checkout repo
-          uses: actions/checkout@v4
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-        - name: Setup .NET
-          uses: actions/setup-dotnet@v4
-          with:
-            dotnet-version: '9.0.x'
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
 
-        - name: Restore dependencies
-          run: dotnet restore
+      - name: Restore dependencies
+        run: dotnet restore
 
-        - name: Build solution
-          run: dotnet build --no-restore --configuration Release
+      - name: Build solution
+        run: dotnet build --no-restore --configuration Release
 
-        - name: Run code analysis
-          run: dotnet build --no-incremental -warnaserror
-        
+      - name: Run code analysis
+        run: dotnet build --no-incremental -warnaserror
+
+      # Optional: run tests if you add them later
+      # - name: Run tests
+      #   run: dotnet test --no-build --verbosity normal
+
+  frontend:
+    name: 🌐 Build & lint Next.js
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: adventureworks-ui
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint code
+        run: npm run lint --if-present
+
+      - name: Build Next.js app
+        run: npm run build
