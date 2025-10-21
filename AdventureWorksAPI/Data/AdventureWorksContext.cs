@@ -17,6 +17,6 @@ public class AdventureWorksContext : DbContext
         modelBuilder.Entity<Person>()
             .ToTable("Person", "Person"); // Table = Person.Person
 
-        base.OnModelCreating(modelBuKKKilder);
+        base.OnModelCreating(modelBuilder);
     }
 }
