@@ -22,8 +22,8 @@ export default function PersonsPage() {
             <th className="py-2 px-4 text-left border-b">ID</th>
             <th className="py-2 px-4 text-left border-b">Title</th>
             <th className="py-2 px-4 text-left border-b">First Name</th>
+            <th className="py-2 px-4 text-left border-b">Middle Name</th>
             <th className="py-2 px-4 text-left border-b">Last Name</th>
-            <th className="py-2 px-4 text-left border-b">Suffix</th>
           </tr>
         </thead>
         <tbody>
@@ -32,8 +32,8 @@ export default function PersonsPage() {
               <td className="py-2 px-4 border-b">{p.businessEntityId}</td>
               <td className="py-2 px-4 border-b">{p.title}</td>
               <td className="py-2 px-4 border-b">{p.firstName}</td>
+              <td className="py-2 px-4 border-b">{p.middleName}</td>
               <td className="py-2 px-4 border-b">{p.lastName}</td>
-              <td className="py-2 px-4 border-b">{p.suffix}</td>
             </tr>
           ))}
         </tbody>
