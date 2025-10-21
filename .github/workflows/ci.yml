@@ -31,4 +31,31 @@ jobs:
 
         - name: Run code analysis
           run: dotnet build --no-incremental -warnaserror
+
+  frontend:
+    name: Builds and analyses NextJS
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: adventureworks-ui
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint code
+        run: npm run lint --if-present
+
+      - name: Build Next.js app
+        run: npm run build
+        
         
