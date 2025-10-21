@@ -1,0 +1,34 @@
+name: AdventureWorks CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  backend:
+      name: Builds and analyzes .NET 
+      runs-on: ubuntu-latest
+      defaults:
+        run:
+          working-directory: AdventureWorksAPI
+
+      steps:
+        - name: Checkout repo
+          uses: actions/checkout@v4
+
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v4
+          with:
+            dotnet-version: '9.0.x'
+
+        - name: Restore dependencies
+          run: dotnet restore
+
+        - name: Build solution
+          run: dotnet build --no-restore --configuration Release
+
+        - name: Run code analysis
+          run: dotnet build --no-incremental -warnaserror
+        
