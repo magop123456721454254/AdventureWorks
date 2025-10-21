@@ -8,9 +8,27 @@ on:
 
 jobs:
   backend:
+      name: Builds and analyzes .NET 
       runs-on: ubuntu-latest
-  
+      defaults:
+        run:
+          working-directory: AdventureWorksAPI
+
       steps:
-      - uses: actions/checkout@v4
-      - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+        - name: Checkout repo
+          uses: actions/checkout@v4
+
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v4
+          with:
+            dotnet-version: '9.0.x'
+
+        - name: Restore dependencies
+          run: dotnet restore
+
+        - name: Build solution
+          run: dotnet build --no-restore --configuration Release
+
+        - name: Run code analysis
+          run: dotnet build --no-incremental -warnaserror
+        
