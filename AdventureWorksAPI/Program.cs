@@ -5,11 +5,13 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContextFactory<AdventureWorksContext>(options =>
-    options.UseSqlServer(
-        "Server=localhost\\SQLEXPRESS;Database=AdventureWorks2016;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;"));
+string connectionString = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true" ? 
+                        "Server=host.docker.internal,1433;Database=AdventureWorks2016;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;"
+                        : "Server=localhost\\SQLEXPRESS;Database=AdventureWorks2016;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;";
 
-builder.WebHost.UseUrls("http://localhost:5000");
+builder.Services.AddDbContextFactory<AdventureWorksContext>(options => options.UseSqlServer(connectionString));
+
+builder.WebHost.UseUrls("http://0.0.0.0:5000");
 
 builder.Services.AddScoped<PersonService>();
 builder.Services.AddOpenApi();
