@@ -57,6 +57,7 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        working-directory: adventureworks-ui
 
       - name: Lint code
         run: npm run lint --if-present
