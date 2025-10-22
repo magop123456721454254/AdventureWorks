@@ -1,13 +1,14 @@
-﻿using AdventureWorksAPI.Services;
+﻿using System;
+using AdventureWorksAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string connectionString = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true" ? 
-                        "Server=host.docker.internal,1433;Database=AdventureWorks2016;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;"
-                        : "Server=localhost\\SQLEXPRESS;Database=AdventureWorks2016;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;";
+string server = System.Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true" ? "host.docker.internal,1433" : "localhost\\SQLEXPRESS";
+
+string connectionString = $"Server={server};Database=AdventureWorks2016;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;";
 
 builder.Services.AddDbContextFactory<AdventureWorksContext>(options => options.UseSqlServer(connectionString));
 
@@ -18,9 +19,9 @@ builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
+builder.Services.AddSwaggerGen(o =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "AdventureWorks API", Version = "v1" });
+    o.SwaggerDoc("v1", new OpenApiInfo { Title = "AdventureWorks API", Version = "v1" });
 });
 
 builder.Services.AddCors(options =>
