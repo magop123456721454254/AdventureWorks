@@ -1,4 +1,6 @@
 name: AdventureWorks CI
+permissions:
+  contents: read
 
 on:
   push:
