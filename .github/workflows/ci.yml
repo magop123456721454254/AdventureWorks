@@ -39,28 +39,32 @@ jobs:
       #   run: dotnet test --no-build --verbosity normal
 
   frontend:
-    name: 🌐 Build & lint Next.js
+    name: 🌐 Build & Lint Next.js
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: adventureworks-ui
 
     steps:
-      - name: Checkout repo
+      # 1. Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2. Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
+      # 3. Install frontend dependencies
       - name: Install dependencies
         run: npm ci
-        working-directory: AdventureWorks/adventureworks-ui
+        working-directory: adventureworks-ui
 
-      - name: Lint code
+      # 4. Lint frontend code (optional)
+      - name: Lint frontend
         run: npm run lint --if-present
+        working-directory: adventureworks-ui
 
-      - name: Build Next.js app
+      # 5. Build frontend
+      - name: Build frontend
         run: npm run build
+        working-directory: adventureworks-ui
