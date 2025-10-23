@@ -1,6 +1,17 @@
 version: "3.9"
 
 services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: adventureworks-sql
+    environment:
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+
   backend:
     build:
       context: .
@@ -8,10 +19,11 @@ services:
     container_name: adventureworks-api
     environment:
       # Use your local SQL Server; host.docker.internal works on Windows/Mac
-      ConnectionStrings__AdventureWorksConnection: "Server=host.docker.internal\\SQLEXPRESS;Database=AdventureWorks2016;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;"
+      ConnectionStrings__AdventureWorksConnection: "Server=sqlserver,1433;Database=AdventureWorks2016;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;"
     ports:
       - "5000:5000"
-    depends_on: []
+    depends_on:
+      - sqlserver
 
   frontend:
     build:
@@ -23,4 +35,7 @@ services:
     depends_on:
       - backend
     environment:
-      NEXT_PUBLIC_API_URL: "http://localhost:5000" # React/Next can read this
+      NEXT_PUBLIC_API_URL: "http://backend:5000" # React/Next can read this
+
+volumes:
+  sqlserver-data:

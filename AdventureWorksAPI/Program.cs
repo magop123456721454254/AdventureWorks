@@ -1,13 +1,35 @@
-﻿using AdventureWorksAPI.Services;
+﻿using System;
+using AdventureWorksAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string connectionString = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true" ? 
-                        "Server=host.docker.internal,1433;Database=AdventureWorks2016;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;"
-                        : "Server=localhost\\SQLEXPRESS;Database=AdventureWorks2016;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;";
+bool runningInDocker = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true"; // ? "host.docker.internal,1433" : "localhost\\SQLEXPRESS";
+
+string connectionString;
+
+if (runningInDocker)
+{
+    connectionString = builder.Configuration.GetConnectionString("AdventureWorksConnection") ?? "";
+}
+else
+{
+    connectionString = "Server=localhost\\SQLEXPRESS;Database=AdventureWorks2016;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;";
+}
+
+builder.Services.AddDbContextFactory<AdventureWorksContext>(options =>
+    options.UseSqlServer(connectionString));
+
+//bool runningInDocker = string.Equals(
+//    global::System.Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER"),
+//    "true",
+//    StringComparison.OrdinalIgnoreCase
+//);
+
+Console.WriteLine($"[DEBUG] The server string used is: {connectionString}");
+Console.WriteLine($"[DEBUG] Running in Docker container is: {runningInDocker}");
 
 builder.Services.AddDbContextFactory<AdventureWorksContext>(options => options.UseSqlServer(connectionString));
 
@@ -17,22 +39,25 @@ builder.Services.AddScoped<PersonService>();
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "AdventureWorks API", Version = "v1" });
-});
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("MyNextJSCORS",
         policy =>
         {
             policy
-                .WithOrigins("http://localhost:3000")
+                 .WithOrigins(
+                    "http://localhost:3000",   // what your browser uses
+                    "http://frontend:3000"     // optional, for container-to-container requests
+                )
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
+});
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "AdventureWorks API", Version = "v1" });
 });
 
 var app = builder.Build();

@@ -7,11 +7,22 @@ import { Person } from './Models/PersonModel';
 export default function PersonsPage() {
   const [persons, setPersons] = useState<Person[]>([]);
 
+  // const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+  fetch(`${apiUrl}/api/person/`)
+
   useEffect(() => {
-    fetch('http://localhost:5000/api/person/') // .NET API
+    fetch(`${apiUrl}/api/person/`)
       .then((res) => res.json())
       .then((data) => setPersons(data));
   }, []);
+
+  // useEffect(() => {
+  //   fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/person/`)
+  //     .then((res) => res.json())
+  //     .then((data) => setPersons(data));
+  // }, []);
 
   // TEST COMMENT FOR FIRST PR
   return (
@@ -21,7 +32,7 @@ export default function PersonsPage() {
           <tr>
             <th className="py-2 px-4 text-left border-b">ID</th>
             <th className="py-2 px-4 text-left border-b">Title</th>
-            <th className="py-2 px-4 text-left border-b">First Name</th>
+            <th className="py-2 px-4 text-left border-b">First Nssssame</th>
             <th className="py-2 px-4 text-left border-b">Middle Name</th>
             <th className="py-2 px-4 text-left border-b">Last Name</th>
           </tr>
