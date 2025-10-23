@@ -39,22 +39,25 @@ builder.Services.AddScoped<PersonService>();
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(o =>
-{
-    o.SwaggerDoc("v1", new OpenApiInfo { Title = "AdventureWorks API", Version = "v1" });
-});
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("MyNextJSCORS",
         policy =>
         {
             policy
-                .WithOrigins("http://localhost:3000")
+                 .WithOrigins(
+                    "http://localhost:3000",   // what your browser uses
+                    "http://frontend:3000"     // optional, for container-to-container requests
+                )
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
+});
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "AdventureWorks API", Version = "v1" });
 });
 
 var app = builder.Build();
