@@ -6,9 +6,30 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string server = System.Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true" ? "host.docker.internal,1433" : "localhost\\SQLEXPRESS";
+bool runningInDocker = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true"; // ? "host.docker.internal,1433" : "localhost\\SQLEXPRESS";
 
-string connectionString = $"Server={server};Database=AdventureWorks2016;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;";
+string connectionString;
+
+if (runningInDocker)
+{
+    connectionString = builder.Configuration.GetConnectionString("AdventureWorksConnection") ?? "";
+}
+else
+{
+    connectionString = "Server=localhost\\SQLEXPRESS;Database=AdventureWorks2016;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;";
+}
+
+builder.Services.AddDbContextFactory<AdventureWorksContext>(options =>
+    options.UseSqlServer(connectionString));
+
+//bool runningInDocker = string.Equals(
+//    global::System.Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER"),
+//    "true",
+//    StringComparison.OrdinalIgnoreCase
+//);
+
+Console.WriteLine($"[DEBUG] The server string used is: {connectionString}");
+Console.WriteLine($"[DEBUG] Running in Docker container is: {runningInDocker}");
 
 builder.Services.AddDbContextFactory<AdventureWorksContext>(options => options.UseSqlServer(connectionString));
 
