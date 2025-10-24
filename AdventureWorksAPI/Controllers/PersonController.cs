@@ -3,9 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdventureWorksAPI.Controllers
 {
-
-    // TEST COMMENT FOR FIRST PR
-
     [ApiController]
     [Route("api/[controller]")]
     public class PersonController : ControllerBase
