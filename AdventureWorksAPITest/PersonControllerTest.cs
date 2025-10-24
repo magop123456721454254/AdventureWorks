@@ -1,5 +1,7 @@
 ﻿using AdventureWorksAPI.Controllers;
 using AdventureWorksAPI.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -43,6 +45,54 @@ namespace AdventureWorksAPITest
 
             // Assert
             var okRes = Assert.IsType<OkObjectResult>(results);
+        }
+
+        [Fact]
+        public void GetPerson_WithSpecificId_ReturnsOk()
+        {
+            // Arrange
+            var mockService = new Mock<MockedPersonService>();
+            var controller = new PersonController(mockService.Object);
+
+            // Act
+            var results = controller.GetPerson(50);
+
+            // Assert
+            var okRes = Assert.IsType<OkObjectResult>(results);
+        }
+
+        [Fact]
+        public void GetPerson_WithSpecificId_HasCorrectValues()
+        {
+            // Arrange
+            var mockService = new Mock<MockedPersonService>();
+            var controller = new PersonController(mockService.Object);
+
+            Person matchPerson = new Person
+            {
+                BusinessEntityId = 50,
+                PersonType = "EM",
+                Title = null,
+                FirstName = "Sidney",
+                MiddleName = "M",
+                LastName = "Higa",
+                Suffix = null,
+                EmailPromotion = 0
+            };
+
+            // Act
+            var result = controller.GetPerson(50);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var person = Assert.IsType<Person>(okResult.Value);
+
+            Assert.Equal(person.FirstName, matchPerson.FirstName);
+            Assert.Equal(person.LastName, matchPerson.LastName);
+            Assert.Equal(person.MiddleName, matchPerson.MiddleName);
+            Assert.Equal(person.Title, matchPerson.Title);
+            Assert.Equal(person.PersonType, matchPerson.PersonType);
+
         }
     }
 }
