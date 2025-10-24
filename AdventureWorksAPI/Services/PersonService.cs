@@ -4,7 +4,8 @@
     {
         private AdventureWorksContext _context;
 
-        public PersonService(AdventureWorksContext context) {
+        public PersonService(AdventureWorksContext context)
+        {
             _context = context;
         }
 
@@ -13,15 +14,22 @@
             return [.. _context.DbSetOfPersons.Take(5)];
         }
 
-        public virtual IEnumerable<Person> GetPersonsList(int amount) {
+        public virtual IEnumerable<Person> GetPersonsList(int amount)
+        {
             return [.. _context.DbSetOfPersons.Take(amount)];
         }
 
         public virtual Person GetPerson(int businessEntityId)
         {
+
             var obj = _context.DbSetOfPersons.Find(businessEntityId);
 
-            return obj;
+            if (obj == null) { 
+                return new Person(); 
+            } else { 
+                return obj; 
+            }
+
         }
     }
 }
