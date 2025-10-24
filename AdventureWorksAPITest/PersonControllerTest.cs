@@ -15,7 +15,7 @@ namespace AdventureWorksAPITest
             var controller = new PersonController(mockService.Object);
 
             // Act
-            var results = controller.GetPersons();
+            var results = controller.GetPersonsList();
 
             // Assert
             var okRes = Assert.IsType<OkObjectResult>(results);
@@ -39,7 +39,7 @@ namespace AdventureWorksAPITest
             var controller = new PersonController(mockService.Object);
 
             // Act
-            var results = controller.GetPersons(11);
+            var results = controller.GetPersonsList(11);
 
             // Assert
             var okRes = Assert.IsType<OkObjectResult>(results);
