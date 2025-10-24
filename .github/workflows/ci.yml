@@ -34,9 +34,8 @@ jobs:
       - name: Run code analysis
         run: dotnet build --no-incremental -warnaserror
 
-      # Optional: run tests if you add them later
-      # - name: Run tests
-      #   run: dotnet test --no-build --verbosity normal
+      - name: Run tests
+        run: dotnet test --no-build --verbosity normal
 
   frontend:
     name: 🌐 Build & Lint Next.js
