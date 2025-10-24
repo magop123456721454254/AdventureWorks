@@ -27,7 +27,17 @@ namespace AdventureWorksAPITest
 
         Person IPersonService.GetPerson(int businessIdentityId)
         {
-            throw new NotImplementedException();
+            return new Person
+            {
+                BusinessEntityId = 50,
+                PersonType = "EM",
+                Title = null,
+                FirstName = "Sidney",
+                MiddleName = "M",
+                LastName = "Higa",
+                Suffix = null,
+                EmailPromotion = 0
+            };
         }
     }
 }
