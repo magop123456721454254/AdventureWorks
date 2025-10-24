@@ -9,6 +9,6 @@ namespace AdventureWorksAPI.Services
 
         public IEnumerable<Person> GetPersonsList(int amount);
 
-        public IActionResult GetPerson(int businessIdentityId);
+        public Person GetPerson(int businessIdentityId);
     }
 }

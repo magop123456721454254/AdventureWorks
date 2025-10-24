@@ -24,5 +24,10 @@ namespace AdventureWorksAPITest
                     new Person { FirstName = "Stan", LastName = "Carley" }
                 };
         }
+
+        Person IPersonService.GetPerson(int businessIdentityId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
