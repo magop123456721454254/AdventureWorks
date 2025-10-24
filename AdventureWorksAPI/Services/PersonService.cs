@@ -16,5 +16,12 @@
         public virtual IEnumerable<Person> GetPersonsList(int amount) {
             return [.. _context.DbSetOfPersons.Take(amount)];
         }
+
+        public virtual Person GetPerson(int businessEntityId)
+        {
+            var obj = _context.DbSetOfPersons.Find(businessEntityId);
+
+            return obj;
+        }
     }
 }
