@@ -35,7 +35,7 @@ builder.Services.AddDbContextFactory<AdventureWorksContext>(options => options.U
 
 builder.WebHost.UseUrls("http://0.0.0.0:5000");
 
-builder.Services.AddScoped<PersonService>();
+builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
@@ -53,6 +53,8 @@ builder.Services.AddCors(options =>
                 .AllowAnyMethod();
         });
 });
+
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
