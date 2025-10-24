@@ -6,7 +6,7 @@ namespace AdventureWorksAPITest
     {
         public MockedPersonService() { }
 
-        public virtual IEnumerable<Person> GetPersons()
+        public virtual IEnumerable<Person> GetPersonsList()
         {
             return new List<Person>
                 {
@@ -15,7 +15,7 @@ namespace AdventureWorksAPITest
                 };
         }
 
-        public virtual IEnumerable<Person> GetPersons(int amount)
+        public virtual IEnumerable<Person> GetPersonsList(int amount)
         {
             return new List<Person>
                 {
@@ -23,6 +23,21 @@ namespace AdventureWorksAPITest
                     new Person { FirstName = "Bob", LastName = "Lazar" },
                     new Person { FirstName = "Stan", LastName = "Carley" }
                 };
+        }
+
+        Person IPersonService.GetPerson(int businessIdentityId)
+        {
+            return new Person
+            {
+                BusinessEntityId = 50,
+                PersonType = "EM",
+                Title = null,
+                FirstName = "Sidney",
+                MiddleName = "M",
+                LastName = "Higa",
+                Suffix = null,
+                EmailPromotion = 0
+            };
         }
     }
 }

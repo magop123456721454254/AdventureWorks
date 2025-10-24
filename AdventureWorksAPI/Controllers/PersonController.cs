@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AdventureWorksAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class PersonController : ControllerBase
     {
         private readonly IPersonService _personService;
@@ -15,17 +15,24 @@ namespace AdventureWorksAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetPersons()
+        public IActionResult GetPersonsList()
         {
-            var persons = _personService.GetPersons(5);
-            return Ok(persons);
+            var personsList = _personService.GetPersonsList(5);
+            return Ok(personsList);
         }
 
         [HttpGet("{amount}")]
-        public IActionResult GetPersons(int amount)
+        public IActionResult GetPersonsList(int amount)
         {
-            var persons = _personService.GetPersons(amount);
-            return Ok(persons);
+            var personsList = _personService.GetPersonsList(amount);
+            return Ok(personsList);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetPerson(int id)
+        {
+            var Person = _personService.GetPerson(id);
+            return Ok(Person);
         }
     }
 }
