@@ -8,12 +8,12 @@
             _context = context;
         }
 
-        public virtual IEnumerable<Person> GetPersons()
+        public virtual IEnumerable<Person> GetPersonsList()
         {
             return [.. _context.DbSetOfPersons.Take(5)];
         }
 
-        public virtual IEnumerable<Person> GetPersons(int amount) {
+        public virtual IEnumerable<Person> GetPersonsList(int amount) {
             return [.. _context.DbSetOfPersons.Take(amount)];
         }
     }

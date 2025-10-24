@@ -17,14 +17,14 @@ namespace AdventureWorksAPI.Controllers
         [HttpGet]
         public IActionResult GetPersons()
         {
-            var persons = _personService.GetPersons(5);
+            var persons = _personService.GetPersonsList(5);
             return Ok(persons);
         }
 
         [HttpGet("{amount}")]
         public IActionResult GetPersons(int amount)
         {
-            var persons = _personService.GetPersons(amount);
+            var persons = _personService.GetPersonsList(amount);
             return Ok(persons);
         }
     }

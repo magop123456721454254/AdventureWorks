@@ -6,7 +6,7 @@ namespace AdventureWorksAPITest
     {
         public MockedPersonService() { }
 
-        public virtual IEnumerable<Person> GetPersons()
+        public virtual IEnumerable<Person> GetPersonsList()
         {
             return new List<Person>
                 {
@@ -15,7 +15,7 @@ namespace AdventureWorksAPITest
                 };
         }
 
-        public virtual IEnumerable<Person> GetPersons(int amount)
+        public virtual IEnumerable<Person> GetPersonsList(int amount)
         {
             return new List<Person>
                 {
