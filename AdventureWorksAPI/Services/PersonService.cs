@@ -1,6 +1,6 @@
 ﻿namespace AdventureWorksAPI.Services
 {
-    public class PersonService
+    public class PersonService : IPersonService
     {
         private AdventureWorksContext _context;
 
@@ -8,11 +8,12 @@
             _context = context;
         }
 
-        public IEnumerable<Person> GetPersons(int amount) {
-            if(amount < 0)
-            {
-                return Enumerable.Empty<Person>();
-            }
+        public virtual IEnumerable<Person> GetPersons()
+        {
+            return [.. _context.DbSetOfPersons.Take(5)];
+        }
+
+        public virtual IEnumerable<Person> GetPersons(int amount) {
             return [.. _context.DbSetOfPersons.Take(amount)];
         }
     }

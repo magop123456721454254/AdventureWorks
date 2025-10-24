@@ -3,25 +3,28 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdventureWorksAPI.Controllers
 {
-
-    // TEST COMMENT FOR FIRST PR
-
     [ApiController]
     [Route("api/[controller]")]
     public class PersonController : ControllerBase
     {
-        private readonly PersonService _personService;
+        private readonly IPersonService _personService;
         
-        public PersonController(PersonService personService)
+        public PersonController(IPersonService personService)
         {
             _personService = personService;
         }
 
-        [HttpGet("{amount?}")]
-        public IActionResult GetPersons(int? amount)
+        [HttpGet]
+        public IActionResult GetPersons()
         {
-            int take = amount ?? 5;
-            var persons = _personService.GetPersons(take);
+            var persons = _personService.GetPersons(5);
+            return Ok(persons);
+        }
+
+        [HttpGet("{amount}")]
+        public IActionResult GetPersons(int amount)
+        {
+            var persons = _personService.GetPersons(amount);
             return Ok(persons);
         }
     }
