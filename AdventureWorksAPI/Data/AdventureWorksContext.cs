@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Reflection.Metadata;
 using System.Security.Cryptography;
 
-public class AdventureWorksContext(DbContextOptions<AdventureWorksContext> options) : DbContext
+public class AdventureWorksContext : DbContext
 {
+    public AdventureWorksContext(DbContextOptions<AdventureWorksContext> options) : base(options) { }
+
     public DbSet<Person> DbSetOfPersons { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -17,7 +18,6 @@ public class AdventureWorksContext(DbContextOptions<AdventureWorksContext> optio
             .ToTable("Person", "Person")
             .HasQueryFilter(p => p.IsActive)
             .ToTable(tb => tb.UseSqlOutputClause(false)); // Table = Person.Person
-
         base.OnModelCreating(modelBuilder);
     }
 }
