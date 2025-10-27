@@ -39,5 +39,9 @@ namespace AdventureWorksAPITest
                 EmailPromotion = 0
             };
         }
+        public bool AddPerson(Person person)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
