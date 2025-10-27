@@ -31,5 +31,11 @@
             }
 
         }
+
+        public virtual bool AddPerson(Person person) {
+            _context.DbSetOfPersons.Add(person);
+            return _context.SaveChanges() > 0;
+
+        }
     }
 }
