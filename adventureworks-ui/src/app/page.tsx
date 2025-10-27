@@ -6,17 +6,14 @@ import { Person } from './Models/PersonModel';
 
 export default function PersonsPage() {
   const [persons, setPersons] = useState<Person[]>([]);
-
-  // const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-  fetch(`${apiUrl}/api/person/`)
+  fetch(`${apiUrl}/api/Person/GetPersonsList/`);
 
   useEffect(() => {
-    fetch(`${apiUrl}/api/person/`)
+    fetch(`${apiUrl}/api/Person/GetPersonsList/`)
       .then((res) => res.json())
       .then((data) => setPersons(data));
-  }, []);
+  }, [apiUrl]);
 
   // useEffect(() => {
   //   fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/person/`)
