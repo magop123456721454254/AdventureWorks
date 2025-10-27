@@ -1,4 +1,5 @@
-﻿using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+﻿using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace AdventureWorksAPI.Services
 {
@@ -21,9 +22,9 @@ namespace AdventureWorksAPI.Services
             return [.. _context.DbSetOfPersons.Take(amount)];
         }
 
-        public virtual Person GetPerson(int id)
+        public virtual Person GetPerson(int businessIdentityId)
         {
-            var obj = _context.DbSetOfPersons.Find(id);
+            var obj = _context.DbSetOfPersons.Find(businessIdentityId);
 
             if (obj == null)
             {
@@ -41,14 +42,29 @@ namespace AdventureWorksAPI.Services
             return _context.SaveChanges() > 0;
         }
 
-        public virtual bool SoftDeletePerson(int id)
+        public virtual bool SoftDeletePerson(int businessIdentityId)
         {
-            var person = _context.DbSetOfPersons.Find(id);
+            var person = _context.DbSetOfPersons.Find(businessIdentityId);
             if (person == null)
             {
                 return false;
             }
             person.IsActive = false;
+            return _context.SaveChanges() > 0;
+        }
+
+        public bool ReactivatePerson(int businessIdentityId)
+        {
+            var person = _context.DbSetOfPersons
+                .IgnoreQueryFilters()
+                .FirstOrDefault(p => p.BusinessEntityId == businessIdentityId);
+            
+            if (person == null)
+            {
+                return false;
+            }
+
+            person.IsActive = true;
             return _context.SaveChanges() > 0;
         }
     }
