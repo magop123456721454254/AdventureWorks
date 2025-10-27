@@ -39,7 +39,13 @@ namespace AdventureWorksAPITest
                 EmailPromotion = 0
             };
         }
+
         public bool AddPerson(Person person)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SoftDeletePerson(int businessIdentityId)
         {
             throw new NotImplementedException();
         }

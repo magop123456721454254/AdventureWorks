@@ -15,8 +15,9 @@ public class AdventureWorksContext : DbContext
             .HasKey(p => p.BusinessEntityId);
 
         modelBuilder.Entity<Person>()
-            .ToTable("Person", "Person"); // Table = Person.Person
-
+            .ToTable("Person", "Person")
+            .HasQueryFilter(p => p.IsActive)
+            .ToTable(tb => tb.UseSqlOutputClause(false)); // Table = Person.Person
         base.OnModelCreating(modelBuilder);
     }
 }
