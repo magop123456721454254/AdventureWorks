@@ -12,5 +12,6 @@ namespace AdventureWorksAPI.Services
         public Person GetPerson(int businessIdentityId);
 
         public bool AddPerson(Person person);
+        public bool SoftDeletePerson(int businessIdentityId);
     }
 }
