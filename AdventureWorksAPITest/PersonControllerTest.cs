@@ -123,20 +123,20 @@ namespace AdventureWorksAPITest
             using var context = new AdventureWorksContext(options);
 
             // Seed a person
-            var person = new Person { BusinessEntityId = 1005, FirstName = "Alice", IsActive = true };
+            var person = new Person { BusinessEntityId = 1006, FirstName = "Alice", IsActive = true };
             context.DbSetOfPersons.Add(person);
             context.SaveChanges();
 
             var service = new PersonService(context);
 
             // Act
-            var result = service.SoftDeletePerson(1005);
+            var result = service.SoftDeletePerson(1006);
 
             // Assert
             Assert.True(result);
             var updatedPerson = context.DbSetOfPersons
                 .IgnoreQueryFilters()
-                .First(p => p.BusinessEntityId == 1005);
+                .First(p => p.BusinessEntityId == 1006);
 
             Assert.False(updatedPerson.IsActive);
         }
