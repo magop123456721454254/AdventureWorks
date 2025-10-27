@@ -34,5 +34,12 @@ namespace AdventureWorksAPI.Controllers
             var Person = _personService.GetPerson(id);
             return Ok(Person);
         }
+
+        [HttpPost]
+        public IActionResult AddPerson(Person person)
+        {
+            var res = _personService.AddPerson(person);
+            return Ok(res);
+        }
     }
 }
