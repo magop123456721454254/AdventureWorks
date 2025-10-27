@@ -8,7 +8,7 @@ namespace AdventureWorksAPI.Controllers
     public class PersonController : ControllerBase
     {
         private readonly IPersonService _personService;
-        
+
         public PersonController(IPersonService personService)
         {
             _personService = personService;
@@ -28,11 +28,25 @@ namespace AdventureWorksAPI.Controllers
             return Ok(personsList);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetPerson(int id)
+        [HttpGet("{businessIdentityId}")]
+        public IActionResult GetPerson(int businessIdentityId)
         {
-            var Person = _personService.GetPerson(id);
+            var Person = _personService.GetPerson(businessIdentityId);
             return Ok(Person);
+        }
+
+        [HttpPost]
+        public IActionResult AddPerson(Person person)
+        {
+            var res = _personService.AddPerson(person);
+            return Ok(res);
+        }
+
+        [HttpPost("{businessIdentityId}")]
+        public IActionResult SoftDeletePerson(int businessIdentityId)
+        {
+            var res = _personService.SoftDeletePerson(businessIdentityId);
+            return Ok(res);
         }
     }
 }

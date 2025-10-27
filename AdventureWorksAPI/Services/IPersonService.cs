@@ -10,5 +10,8 @@ namespace AdventureWorksAPI.Services
         public IEnumerable<Person> GetPersonsList(int amount);
 
         public Person GetPerson(int businessIdentityId);
+
+        public bool AddPerson(Person person);
+        public bool SoftDeletePerson(int businessIdentityId);
     }
 }

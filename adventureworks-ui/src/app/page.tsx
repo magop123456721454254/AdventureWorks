@@ -15,13 +15,6 @@ export default function PersonsPage() {
       .then((data) => setPersons(data));
   }, [apiUrl]);
 
-  // useEffect(() => {
-  //   fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/person/`)
-  //     .then((res) => res.json())
-  //     .then((data) => setPersons(data));
-  // }, []);
-
-  // TEST COMMENT FOR FIRST PR
   return (
     <div className="p-3 content-center">
       <table className="w-3/4 border border-gray-200">

@@ -10,4 +10,5 @@ public class Person
     public string? LastName { get; set; }
     public string? Suffix { get; set; }
     public int? EmailPromotion { get; set; }
+    public bool IsActive { get; set; }
 }
