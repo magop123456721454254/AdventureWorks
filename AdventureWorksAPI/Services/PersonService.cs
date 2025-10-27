@@ -1,4 +1,6 @@
-﻿namespace AdventureWorksAPI.Services
+﻿using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
+namespace AdventureWorksAPI.Services
 {
     public class PersonService : IPersonService
     {
@@ -19,23 +21,35 @@
             return [.. _context.DbSetOfPersons.Take(amount)];
         }
 
-        public virtual Person GetPerson(int businessEntityId)
+        public virtual Person GetPerson(int id)
         {
+            var obj = _context.DbSetOfPersons.Find(id);
 
-            var obj = _context.DbSetOfPersons.Find(businessEntityId);
-
-            if (obj == null) { 
-                return new Person(); 
-            } else { 
-                return obj; 
+            if (obj == null)
+            {
+                return new Person();
             }
-
+            else
+            {
+                return obj;
+            }
         }
 
-        public virtual bool AddPerson(Person person) {
+        public virtual bool AddPerson(Person person)
+        {
             _context.DbSetOfPersons.Add(person);
             return _context.SaveChanges() > 0;
+        }
 
+        public virtual bool SoftDeletePerson(int id)
+        {
+            var person = _context.DbSetOfPersons.Find(id);
+            if (person == null)
+            {
+                return false;
+            }
+            person.IsActive = false;
+            return _context.SaveChanges() > 0;
         }
     }
 }
