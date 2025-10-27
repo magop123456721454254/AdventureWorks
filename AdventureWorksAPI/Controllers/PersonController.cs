@@ -48,5 +48,12 @@ namespace AdventureWorksAPI.Controllers
             var res = _personService.SoftDeletePerson(businessIdentityId);
             return Ok(res);
         }
+
+        [HttpPost("{businessIdentityId}")]
+        public IActionResult ReactivatePerson(int businessIdentityId)
+        {
+            var res = _personService.ReactivatePerson(businessIdentityId);
+            return Ok(res);
+        }
     }
 }

@@ -49,5 +49,10 @@ namespace AdventureWorksAPITest
         {
             throw new NotImplementedException();
         }
+
+        public bool ReactivatePerson(int businessIdentityId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -140,5 +140,36 @@ namespace AdventureWorksAPITest
 
             Assert.False(updatedPerson.IsActive);
         }
+
+        [Fact]
+        public void ReactivatePerson_ReactivatesPerson()
+        {
+            var options = new DbContextOptionsBuilder<AdventureWorksContext>()
+                .UseInMemoryDatabase(databaseName: "SoftDeleteTestDb")
+                .Options;
+
+            using var context = new AdventureWorksContext(options);
+
+            // Seed a person
+            var person = new Person { BusinessEntityId = 1005, FirstName = "Alice", IsActive = true };
+            context.DbSetOfPersons.Add(person);
+            context.SaveChanges();
+
+            var service = new PersonService(context);
+
+            // Act
+            var result = service.SoftDeletePerson(1005);
+
+            // Assert
+            Assert.True(result);
+            var updatedPerson = context.DbSetOfPersons
+                .IgnoreQueryFilters()
+                .First(p => p.BusinessEntityId == 1005);
+
+            Assert.False(updatedPerson.IsActive);
+            
+            result = service.ReactivatePerson(1005);
+            Assert.True(updatedPerson.IsActive);            
+        }
     }
 }
