@@ -37,7 +37,7 @@ builder.WebHost.UseUrls("http://0.0.0.0:5000");
 
 builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddOpenApi();
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddCors(options =>
 {
