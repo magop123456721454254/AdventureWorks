@@ -1,6 +1,5 @@
 ﻿using AdventureWorksAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace AdventureWorksAPI.Services
 {
@@ -37,15 +36,13 @@ namespace AdventureWorksAPI.Services
             }
         }
 
-        public virtual Person AddPerson(PersonDto personDto)
+        public  Person AddPerson(PersonDto personDto)
         {
             var person = MapDtoToPerson(personDto);
             _context.DbSetOfPersons.Add(person);
             _context.SaveChanges();
             return person;
         }
-
-      
 
         public virtual bool SoftDeletePerson(int businessIdentityId)
         {
@@ -73,9 +70,7 @@ namespace AdventureWorksAPI.Services
             return _context.SaveChanges() > 0;
         }
 
-     
-
-        private Person MapDtoToPerson(PersonDto personDto)
+        private static Person MapDtoToPerson(PersonDto personDto)
         {
             return new Person
             {
