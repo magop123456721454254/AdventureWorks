@@ -1,7 +1,9 @@
-﻿using System.Globalization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 public class Person
 {
+    [Key]
     public int BusinessEntityId { get; set; }
     public string? PersonType { get; set; }
     public string? Title { get; set; }
