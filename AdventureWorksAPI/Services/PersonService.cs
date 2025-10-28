@@ -67,5 +67,21 @@ namespace AdventureWorksAPI.Services
             person.IsActive = true;
             return _context.SaveChanges() > 0;
         }
+
+     
+
+        private Person MapDtoToPerson(PersonDto personDto)
+        {
+            return new Person
+            {
+                PersonType = personDto.PersonType,
+                FirstName = personDto.FirstName,
+                LastName = personDto.LastName,
+                MiddleName = personDto.MiddleName,
+                Suffix = personDto.Suffix,
+                EmailPromotion = personDto.EmailPromotion,
+                IsActive = true
+            };
+        }
     }
 }
