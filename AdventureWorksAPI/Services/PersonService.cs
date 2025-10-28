@@ -67,5 +67,21 @@ namespace AdventureWorksAPI.Services
             person.IsActive = true;
             return _context.SaveChanges() > 0;
         }
+ 		
+ 		// Updated Person is sent from FE (unchanged parameters are reused)
+        public bool EditPerson(int businessIdentityId, Person updatedPerson)
+        {
+            //var personToUpdate = _context.DbSetOfPersons.Find(businessIdentityId);
+            //personToUpdate = updatedPerson;
+            //_context.SaveChanges();
+
+            var existingPerson = _context.DbSetOfPersons.Find(businessIdentityId);
+            if (existingPerson == null)
+                return false;
+
+            _context.Entry(existingPerson).CurrentValues.SetValues(updatedPerson);
+            return _context.SaveChanges() > 0;
+        }
+
     }
 }

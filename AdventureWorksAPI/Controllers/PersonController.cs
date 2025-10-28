@@ -55,5 +55,12 @@ namespace AdventureWorksAPI.Controllers
             var res = _personService.ReactivatePerson(businessIdentityId);
             return Ok(res);
         }
+
+        [HttpPost("{businessIdentityId}")]
+        public IActionResult EditPerson(int businessIdentityId, Person person)
+        {
+            var res = _personService.EditPerson(businessIdentityId, person);
+            return Ok(res);
+        }
     }
 }
