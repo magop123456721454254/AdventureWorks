@@ -1,4 +1,5 @@
-﻿using AdventureWorksAPI.Services;
+﻿using AdventureWorksAPI.Models;
+using AdventureWorksAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdventureWorksAPI.Controllers
@@ -36,9 +37,9 @@ namespace AdventureWorksAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddPerson(Person person)
+        public IActionResult AddPerson(PersonDto personDto)
         {
-            var res = _personService.AddPerson(person);
+            var res = _personService.AddPerson(personDto);
             return Ok(res);
         }
 
