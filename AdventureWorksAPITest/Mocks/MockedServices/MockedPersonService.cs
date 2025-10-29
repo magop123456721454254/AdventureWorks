@@ -56,7 +56,7 @@ namespace AdventureWorksAPITest
             throw new NotImplementedException();
         }
         
-        public bool EditPerson(int businessIdentityId, Person updatedPerson)
+        public bool EditPerson(int businessIdentityId, PersonDto updatedPerson)
         {
             throw new NotImplementedException();
         }

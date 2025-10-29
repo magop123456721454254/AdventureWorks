@@ -58,7 +58,7 @@ namespace AdventureWorksAPI.Controllers
         }
 
         [HttpPost("{businessIdentityId}")]
-        public IActionResult EditPerson(int businessIdentityId, Person person)
+        public IActionResult EditPerson(int businessIdentityId, PersonDto person)
         {
             var res = _personService.EditPerson(businessIdentityId, person);
             return Ok(res);
