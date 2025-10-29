@@ -53,7 +53,7 @@ namespace AdventureWorksAPI.Controllers
         [HttpPost("{businessIdentityId}")]
         public IActionResult ReactivatePerson(int businessIdentityId)
         {
-            var res = _personService.ReactivatePerson(businessIdentityId);
+            var res = _personService.ReActivatePerson(businessIdentityId);
             return Ok(res);
         }
     }

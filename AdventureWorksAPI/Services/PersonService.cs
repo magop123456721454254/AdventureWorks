@@ -36,7 +36,7 @@ namespace AdventureWorksAPI.Services
             }
         }
 
-        public  Person AddPerson(PersonDto personDto)
+        public Person AddPerson(PersonDto personDto)
         {
             var person = MapDtoToPerson(personDto);
             _context.DbSetOfPersons.Add(person);
@@ -55,7 +55,7 @@ namespace AdventureWorksAPI.Services
             return _context.SaveChanges() > 0;
         }
 
-        public bool ReactivatePerson(int businessIdentityId)
+        public bool ReActivatePerson(int businessIdentityId)
         {
             var person = _context.DbSetOfPersons
                 .IgnoreQueryFilters()

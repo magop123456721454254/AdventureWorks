@@ -169,7 +169,7 @@ namespace AdventureWorksAPITest
 
             Assert.False(updatedPerson.IsActive);
             
-            result = service.ReactivatePerson(1005);
+            result = service.ReActivatePerson(1005);
             Assert.True(updatedPerson.IsActive);            
         }
     }

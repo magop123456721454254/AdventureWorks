@@ -8,7 +8,6 @@ namespace AdventureWorksAPI.Services
         public Person GetPerson(int businessIdentityId);
         public Person AddPerson(PersonDto personDto);
         public bool SoftDeletePerson(int businessIdentityId);
-        public bool ReactivatePerson(int businessIdentityId);
-
+        public bool ReActivatePerson(int businessIdentityId);
     }
 }

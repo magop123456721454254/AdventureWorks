@@ -51,7 +51,7 @@ namespace AdventureWorksAPITest
             throw new NotImplementedException();
         }
 
-        public bool ReactivatePerson(int businessIdentityId)
+        public bool ReActivatePerson(int businessIdentityId)
         {
             throw new NotImplementedException();
         }
