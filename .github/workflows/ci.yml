@@ -10,7 +10,7 @@ on:
 
 jobs:
   backend:
-    name: 🧩 Build & analyze .NET API, run unit tests
+    name: 🧩 Build & analyze .NET API
     runs-on: ubuntu-latest
     defaults:
       run:
