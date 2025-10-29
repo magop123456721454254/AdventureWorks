@@ -21,7 +21,7 @@ namespace AdventureWorksAPITest
             return new List<Person>
                 {
                     new Person { FirstName = "Alice", LastName = "Smith" },
-                    new Person { FirstName = "Bob", LastName = "Lazar" },sssssssss
+                    new Person { FirstName = "Bob", LastName = "Lazar" },
                     new Person { FirstName = "Stan", LastName = "Carley" }
                 };
         }
