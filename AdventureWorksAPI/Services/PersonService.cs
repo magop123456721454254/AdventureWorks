@@ -22,18 +22,11 @@ namespace AdventureWorksAPI.Services
             return [.. _context.DbSetOfPersons.Take(amount)];
         }
 
-        public Person GetPerson(int businessIdentityId)
+        public Person? GetPerson(int businessIdentityId)
         {
             var obj = _context.DbSetOfPersons.Find(businessIdentityId);
 
-            if (obj == null)
-            {
-                return new Person();
-            }
-            else
-            {
-                return obj;
-            }
+            return obj ?? null;
         }
 
         public Person AddPerson(PersonDto personDto)
@@ -60,7 +53,7 @@ namespace AdventureWorksAPI.Services
             var person = _context.DbSetOfPersons
                 .IgnoreQueryFilters()
                 .FirstOrDefault(p => p.BusinessEntityId == businessIdentityId);
-            
+
             if (person == null)
             {
                 return false;
@@ -70,14 +63,31 @@ namespace AdventureWorksAPI.Services
             return _context.SaveChanges() > 0;
         }
 
+        // Updated Person is sent from FE (unchanged parameters are reused)
+        public bool EditPerson(int businessIdentityId, PersonDto updatedPersonDto)
+        {
+            var oldPerson = _context.DbSetOfPersons.Find(businessIdentityId);
+            if (oldPerson == null)
+            {
+                return false;
+            }
+
+            Person updatedPerson = MapDtoToPerson(updatedPersonDto);
+            updatedPerson.BusinessEntityId = oldPerson.BusinessEntityId;
+
+            _context.Entry(oldPerson).CurrentValues.SetValues(updatedPerson);
+            return _context.SaveChanges() > 0;
+        }
+
         private static Person MapDtoToPerson(PersonDto personDto)
         {
             return new Person
             {
                 PersonType = personDto.PersonType,
+                Title = personDto.Title,
                 FirstName = personDto.FirstName,
-                LastName = personDto.LastName,
                 MiddleName = personDto.MiddleName,
+                LastName = personDto.LastName,
                 Suffix = personDto.Suffix,
                 EmailPromotion = personDto.EmailPromotion,
                 IsActive = true
