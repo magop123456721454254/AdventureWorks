@@ -2,7 +2,6 @@
 {
     public class PersonDto
     {
-        public int? BusinessEntityId { get; set; }
         public string? PersonType { get; set; }
         public string? Title { get; set; }
         public string? FirstName { get; set; }

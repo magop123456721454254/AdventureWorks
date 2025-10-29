@@ -12,17 +12,17 @@ namespace AdventureWorksAPI.Services
             _context = context;
         }
 
-        public virtual IEnumerable<Person> GetPersonsList()
+        public IEnumerable<Person> GetPersonsList()
         {
             return [.. _context.DbSetOfPersons.Take(5)];
         }
 
-        public virtual IEnumerable<Person> GetPersonsList(int amount)
+        public IEnumerable<Person> GetPersonsList(int amount)
         {
             return [.. _context.DbSetOfPersons.Take(amount)];
         }
 
-        public virtual Person GetPerson(int businessIdentityId)
+        public Person GetPerson(int businessIdentityId)
         {
             var obj = _context.DbSetOfPersons.Find(businessIdentityId);
 
@@ -44,7 +44,7 @@ namespace AdventureWorksAPI.Services
             return person;
         }
 
-        public virtual bool SoftDeletePerson(int businessIdentityId)
+        public bool SoftDeletePerson(int businessIdentityId)
         {
             var person = _context.DbSetOfPersons.Find(businessIdentityId);
             if (person == null)
