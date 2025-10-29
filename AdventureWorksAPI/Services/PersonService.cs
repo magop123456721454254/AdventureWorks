@@ -22,18 +22,11 @@ namespace AdventureWorksAPI.Services
             return [.. _context.DbSetOfPersons.Take(amount)];
         }
 
-        public Person GetPerson(int businessIdentityId)
+        public Person? GetPerson(int businessIdentityId)
         {
             var obj = _context.DbSetOfPersons.Find(businessIdentityId);
 
-            if (obj == null)
-            {
-                return new Person();
-            }
-            else
-            {
-                return obj;
-            }
+            return obj ?? null;
         }
 
         public Person AddPerson(PersonDto personDto)
