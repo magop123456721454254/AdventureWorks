@@ -1,4 +1,5 @@
 ﻿using AdventureWorksAPI.Controllers;
+using AdventureWorksAPI.Models;
 using AdventureWorksAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -104,11 +105,11 @@ namespace AdventureWorksAPITest
             using var context = new AdventureWorksContext(options);
             var service = new PersonService(context);
 
-            var newPerson = new Person { BusinessEntityId = 1005, FirstName = "Test", LastName = "Tester", IsActive = true }; 
+            var newPerson = new PersonDto { FirstName = "Test", LastName = "Tester", IsActive = true }; 
             
             var result = service.AddPerson(newPerson);
 
-            Assert.True(result);
+            Assert.IsType<Person>(result);
             Assert.Equal(1, context.DbSetOfPersons.Count());
             Assert.Equal("Test", context.DbSetOfPersons.First().FirstName);
         }
@@ -168,7 +169,7 @@ namespace AdventureWorksAPITest
 
             Assert.False(updatedPerson.IsActive);
             
-            result = service.ReactivatePerson(1005);
+            result = service.ReActivatePerson(1005);
             Assert.True(updatedPerson.IsActive);            
         }
     }

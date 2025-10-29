@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Runtime.InteropServices;
-
+﻿using AdventureWorksAPI.Models;
 namespace AdventureWorksAPI.Services
 {
     public interface IPersonService
@@ -8,8 +6,8 @@ namespace AdventureWorksAPI.Services
         public IEnumerable<Person> GetPersonsList();
         public IEnumerable<Person> GetPersonsList(int amount);
         public Person GetPerson(int businessIdentityId);
-        public bool AddPerson(Person person);
+        public Person AddPerson(PersonDto personDto);
         public bool SoftDeletePerson(int businessIdentityId);
-        public bool ReactivatePerson(int businessIdentityId);
+        public bool ReActivatePerson(int businessIdentityId);
     }
 }

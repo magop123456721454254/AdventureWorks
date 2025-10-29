@@ -1,4 +1,5 @@
-﻿using AdventureWorksAPI.Services;
+﻿using AdventureWorksAPI.Models;
+using AdventureWorksAPI.Services;
 
 namespace AdventureWorksAPITest
 {
@@ -25,7 +26,7 @@ namespace AdventureWorksAPITest
                 };
         }
 
-        Person IPersonService.GetPerson(int businessIdentityId)
+        public Person GetPerson(int businessIdentityId)
         {
             return new Person
             {
@@ -40,7 +41,7 @@ namespace AdventureWorksAPITest
             };
         }
 
-        public bool AddPerson(Person person)
+        public Person AddPerson(PersonDto person)
         {
             throw new NotImplementedException();
         }
@@ -50,7 +51,7 @@ namespace AdventureWorksAPITest
             throw new NotImplementedException();
         }
 
-        public bool ReactivatePerson(int businessIdentityId)
+        public bool ReActivatePerson(int businessIdentityId)
         {
             throw new NotImplementedException();
         }

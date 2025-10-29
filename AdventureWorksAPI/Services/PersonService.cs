@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+﻿using AdventureWorksAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksAPI.Services
 {
@@ -12,17 +12,17 @@ namespace AdventureWorksAPI.Services
             _context = context;
         }
 
-        public virtual IEnumerable<Person> GetPersonsList()
+        public IEnumerable<Person> GetPersonsList()
         {
             return [.. _context.DbSetOfPersons.Take(5)];
         }
 
-        public virtual IEnumerable<Person> GetPersonsList(int amount)
+        public IEnumerable<Person> GetPersonsList(int amount)
         {
             return [.. _context.DbSetOfPersons.Take(amount)];
         }
 
-        public virtual Person GetPerson(int businessIdentityId)
+        public Person GetPerson(int businessIdentityId)
         {
             var obj = _context.DbSetOfPersons.Find(businessIdentityId);
 
@@ -36,13 +36,15 @@ namespace AdventureWorksAPI.Services
             }
         }
 
-        public virtual bool AddPerson(Person person)
+        public Person AddPerson(PersonDto personDto)
         {
+            var person = MapDtoToPerson(personDto);
             _context.DbSetOfPersons.Add(person);
-            return _context.SaveChanges() > 0;
+            _context.SaveChanges();
+            return person;
         }
 
-        public virtual bool SoftDeletePerson(int businessIdentityId)
+        public bool SoftDeletePerson(int businessIdentityId)
         {
             var person = _context.DbSetOfPersons.Find(businessIdentityId);
             if (person == null)
@@ -53,7 +55,7 @@ namespace AdventureWorksAPI.Services
             return _context.SaveChanges() > 0;
         }
 
-        public bool ReactivatePerson(int businessIdentityId)
+        public bool ReActivatePerson(int businessIdentityId)
         {
             var person = _context.DbSetOfPersons
                 .IgnoreQueryFilters()
@@ -66,6 +68,20 @@ namespace AdventureWorksAPI.Services
 
             person.IsActive = true;
             return _context.SaveChanges() > 0;
+        }
+
+        private static Person MapDtoToPerson(PersonDto personDto)
+        {
+            return new Person
+            {
+                PersonType = personDto.PersonType,
+                FirstName = personDto.FirstName,
+                LastName = personDto.LastName,
+                MiddleName = personDto.MiddleName,
+                Suffix = personDto.Suffix,
+                EmailPromotion = personDto.EmailPromotion,
+                IsActive = true
+            };
         }
     }
 }

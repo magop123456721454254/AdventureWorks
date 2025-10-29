@@ -1,11 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace AdventureWorksAPI.Models
+﻿namespace AdventureWorksAPI.Models
 {
-    public class Person
+    public class PersonDto
     {
-        [Key]
-        public int BusinessEntityId { get; set; }
         public string? PersonType { get; set; }
         public string? Title { get; set; }
         public string? FirstName { get; set; }
@@ -13,6 +9,6 @@ namespace AdventureWorksAPI.Models
         public string? LastName { get; set; }
         public string? Suffix { get; set; }
         public int? EmailPromotion { get; set; }
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }  
     }
 }
