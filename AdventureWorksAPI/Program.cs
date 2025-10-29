@@ -1,4 +1,5 @@
 ﻿using System;
+using AdventureWorksAPI.Models;
 using AdventureWorksAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -76,5 +77,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthorization();
 app.MapControllers();
+
+// Minimal API example
+//app.MapGet("/person/GetPersonList", (IPersonService personService) =>
+//{
+//    var persons = personService.GetPersonsList();
+//    return Results.Ok(persons);
+//});
 
 app.Run();

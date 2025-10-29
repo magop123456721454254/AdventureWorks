@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Security.Cryptography;
+﻿using AdventureWorksAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 public class AdventureWorksContext : DbContext
 {
