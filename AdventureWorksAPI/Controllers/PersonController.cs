@@ -1,5 +1,6 @@
 ﻿using AdventureWorksAPI.Models;
 using AdventureWorksAPI.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdventureWorksAPI.Controllers
@@ -32,8 +33,12 @@ namespace AdventureWorksAPI.Controllers
         [HttpGet("{businessIdentityId}")]
         public IActionResult GetPerson(int businessIdentityId)
         {
-            var Person = _personService.GetPerson(businessIdentityId);
-            return Ok(Person);
+            var person = _personService.GetPerson(businessIdentityId);
+            if (person == null)
+            {
+                return NotFound();
+            }
+            return Ok(person);
         }
 
         [HttpPost]
@@ -54,6 +59,10 @@ namespace AdventureWorksAPI.Controllers
         public IActionResult ReactivatePerson(int businessIdentityId)
         {
             var res = _personService.ReActivatePerson(businessIdentityId);
+            if (res == false)
+            {
+                return BadRequest();
+            }
             return Ok(res);
         }
 
@@ -61,6 +70,10 @@ namespace AdventureWorksAPI.Controllers
         public IActionResult EditPerson(int businessIdentityId, PersonDto person)
         {
             var res = _personService.EditPerson(businessIdentityId, person);
+            if(res == false)
+            {
+                return BadRequest();
+            }
             return Ok(res);
         }
     }

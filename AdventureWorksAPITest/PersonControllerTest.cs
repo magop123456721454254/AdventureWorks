@@ -42,6 +42,8 @@ namespace AdventureWorksAPITest
         {
             // Arrange
             var mockService = new Mock<IPersonService>();
+            mockService.Setup(s => s.GetPerson(50))
+                .Returns(new Person { FirstName = "Alice", BusinessEntityId = 50 });
             var controller = new PersonController(mockService.Object);
 
             // Act
@@ -56,17 +58,16 @@ namespace AdventureWorksAPITest
         {
             // Arrange
             var mockService = new Mock<IPersonService>();
-            mockService.Setup(s => s.GetPerson(50)).Returns(new Person { FirstName = "Alice", BusinessEntityId = 50 });
+            mockService.Setup(s => s.GetPerson(50))
+                .Returns(new Person { FirstName = "Alice", BusinessEntityId = 50 });
             var controller = new PersonController(mockService.Object);
 
             // Act
             var results = controller.GetPerson(51);
-
+            
             // Assert
             Assert.IsType<NotFoundResult>(results);
         }
-
-
 
         [Fact]
         public void GetPerson_WithSpecificId_HasCorrectValues()
