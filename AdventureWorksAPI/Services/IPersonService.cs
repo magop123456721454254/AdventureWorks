@@ -6,6 +6,7 @@ namespace AdventureWorksAPI.Services
         public IEnumerable<Person> GetPersonsList();
         public IEnumerable<Person> GetPersonsList(int amount);
         public Person? GetPerson(int businessIdentityId);
+        public IEnumerable<Person>? FindPersons(string keyword);
         public Person AddPerson(PersonDto personDto);
         public bool SoftDeletePerson(int businessIdentityId);
         public bool ReActivatePerson(int businessIdentityId);
