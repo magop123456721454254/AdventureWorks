@@ -1,5 +1,7 @@
 ﻿using AdventureWorksAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Reflection;
 
 namespace AdventureWorksAPI.Services
 {
@@ -77,6 +79,22 @@ namespace AdventureWorksAPI.Services
 
             _context.Entry(oldPerson).CurrentValues.SetValues(updatedPerson);
             return _context.SaveChanges() > 0;
+        }
+
+        public IEnumerable<Person>? FindPersons(string keyword)
+        {
+            var searchResult = _context.DbSetOfPersons.Where(person =>
+                person.PersonType != null && person.PersonType.Contains(keyword) ||
+                person.Title != null && person.Title.Contains(keyword) ||
+                person.FirstName != null && person.FirstName.Contains(keyword) ||
+                person.MiddleName != null && person.MiddleName.Contains(keyword) ||
+                person.LastName != null && person.LastName.Contains(keyword) ||
+                person.Suffix != null && person.Suffix.Contains(keyword)
+            );
+
+            //var searchResult = _context.DbSetOfPersons.Where(person => person.AnyPropertyContainsKeyword(keyword));
+              
+            return searchResult.ToList() ?? null;
         }
 
         private static Person MapDtoToPerson(PersonDto personDto)

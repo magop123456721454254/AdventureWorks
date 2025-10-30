@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdventureWorksAPI.Models
 {
@@ -14,5 +15,14 @@ namespace AdventureWorksAPI.Models
         public string? Suffix { get; set; }
         public int? EmailPromotion { get; set; }
         public bool IsActive { get; set; }
+
+        public bool AnyPropertyContainsKeyword(string keyword)
+        {
+            return Title != null && Title.Contains(keyword) ||
+                FirstName != null && FirstName.Contains(keyword) ||
+                MiddleName != null && MiddleName.Contains(keyword) ||
+                LastName != null && LastName.Contains(keyword) ||
+                Suffix != null && Suffix.Contains(keyword);
+        }
     }
 }

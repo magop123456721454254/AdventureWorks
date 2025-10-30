@@ -1,6 +1,5 @@
 ﻿using AdventureWorksAPI.Models;
 using AdventureWorksAPI.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdventureWorksAPI.Controllers
@@ -41,6 +40,19 @@ namespace AdventureWorksAPI.Controllers
             return Ok(person);
         }
 
+        [HttpGet("{keyword}")]
+        public IActionResult FindPersons(string keyword)
+        {
+            var res = _personService.FindPersons(keyword);
+            
+            if (res == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(res);
+        }
+
         [HttpPost]
         public IActionResult AddPerson(PersonDto personDto)
         {
@@ -70,11 +82,13 @@ namespace AdventureWorksAPI.Controllers
         public IActionResult EditPerson(int businessIdentityId, PersonDto person)
         {
             var res = _personService.EditPerson(businessIdentityId, person);
-            if(res == false)
+            if (res == false)
             {
                 return BadRequest();
             }
             return Ok(res);
         }
+
+        
     }
 }
