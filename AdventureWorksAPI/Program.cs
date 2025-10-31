@@ -1,8 +1,5 @@
-﻿using System;
-using AdventureWorksAPI.Models;
-using AdventureWorksAPI.Services;
+﻿using AdventureWorksAPI.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -67,13 +64,15 @@ var app = builder.Build();
 
 app.UseCors("MyNextJSCORS");
 
+app.UseStaticFiles();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AdventureWorks API V1"));
+    app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "AdventureWorks API V1"); c.InjectStylesheet("/swagger-ui/SwaggerDark.css"); });
 }
+
 
 app.UseAuthorization();
 app.MapControllers();
