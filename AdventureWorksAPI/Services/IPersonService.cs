@@ -11,5 +11,6 @@ namespace AdventureWorksAPI.Services
         public bool SoftDeletePerson(int businessIdentityId);
         public bool ReActivatePerson(int businessIdentityId);
         public bool EditPerson(int businessIdentityId, PersonDto person);
+        public IEnumerable<KeyValuePair<string, int>> GetRankedOccurances(string propertyName, int listLength, bool orderByDesc);
     }
 }

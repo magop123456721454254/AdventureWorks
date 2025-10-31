@@ -1,4 +1,5 @@
 ﻿using AdventureWorksAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Reflection;
@@ -37,6 +38,27 @@ namespace AdventureWorksAPI.Services
             _context.DbSetOfPersons.Add(person);
             _context.SaveChanges();
             return person;
+        }
+
+
+        public IEnumerable<KeyValuePair<string, int>> GetRankedOccurances(string propertyName, int listLength, bool orderByDesc)
+        {
+            if (orderByDesc)
+            {
+                return _context.DbSetOfPersons.GroupBy(p => p.FirstName)
+                    .OrderByDescending(p => p.Count())
+                    .Take(listLength)
+                    .Select(p => new KeyValuePair<string, int>(p.Key, p.Count()))
+                    .ToList();
+            }
+            else
+            {
+                return _context.DbSetOfPersons.GroupBy(p => p.FirstName)
+                    .OrderBy(p => p.Count())
+                    .Take(listLength)
+                    .Select(p => new KeyValuePair<string, int>(p.Key, p.Count()))
+                    .ToList();
+            }
         }
 
         public bool SoftDeletePerson(int businessIdentityId)
