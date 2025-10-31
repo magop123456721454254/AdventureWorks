@@ -7,7 +7,7 @@ export const darkTheme = createTheme({
       main: "#90caf9", // light blue for active tab
     },
     background: {
-      default: "#121212",
+      default: "#7a2c2cff",
       paper: "#1e1e1e",
     },
     text: {
