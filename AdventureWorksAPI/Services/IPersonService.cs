@@ -6,12 +6,10 @@ namespace AdventureWorksAPI.Services
         public IEnumerable<Person> GetPersonsList();
         public IEnumerable<Person> GetPersonsList(int amount);
         public Person? GetPerson(int businessIdentityId);
-        public IEnumerable<KeyValuePair<string, int>> GetRankedOccurances(string propertyName, int listLength, bool orderByDesc);
         public IEnumerable<Person>? FindPersons(string keyword);
         public Person AddPerson(PersonDto personDto);
         public bool SoftDeletePerson(int businessIdentityId);
         public bool ReActivatePerson(int businessIdentityId);
         public bool EditPerson(int businessIdentityId, PersonDto person);
-
     }
 }

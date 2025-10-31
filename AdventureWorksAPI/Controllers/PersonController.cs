@@ -53,20 +53,6 @@ namespace AdventureWorksAPI.Controllers
             return Ok(res);
         }
 
-        [HttpGet]
-        public IActionResult GetRankedOccurances(string propertyName, int listLength, bool orderByDesc)
-        {
-            var res = _personService.GetRankedOccurances(propertyName, listLength, orderByDesc);
-
-            if (res == null)
-            {
-                return BadRequest();
-            }
-
-            return Ok(res);
-        }
-
-
         [HttpPost]
         public IActionResult AddPerson(PersonDto personDto)
         {
@@ -103,5 +89,6 @@ namespace AdventureWorksAPI.Controllers
             return Ok(res);
         }
 
+        
     }
 }
