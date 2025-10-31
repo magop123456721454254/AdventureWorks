@@ -48,7 +48,7 @@ namespace AdventureWorksAPI.Services
                 return _context.DbSetOfPersons.GroupBy(p => p.FirstName)
                     .OrderByDescending(p => p.Count())
                     .Take(listLength)
-                    .Select(p => new KeyValuePair<string, int>(p.Key, p.Count()))
+                    .Select(p => new KeyValuePair<string, int>(p.Key ?? string.Empty, p.Count()))
                     .ToList();
             }
             else
@@ -56,7 +56,7 @@ namespace AdventureWorksAPI.Services
                 return _context.DbSetOfPersons.GroupBy(p => p.FirstName)
                     .OrderBy(p => p.Count())
                     .Take(listLength)
-                    .Select(p => new KeyValuePair<string, int>(p.Key, p.Count()))
+                    .Select(p => new KeyValuePair<string, int>(p.Key ?? string.Empty, p.Count()))
                     .ToList();
             }
         }
