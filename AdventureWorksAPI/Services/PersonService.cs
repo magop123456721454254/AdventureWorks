@@ -31,6 +31,26 @@ namespace AdventureWorksAPI.Services
             return obj ?? null;
         }
 
+        public IEnumerable<KeyValuePair<string, int>> GetRankedOccurances(string propertyName, int listLength, bool orderByDesc)
+        {
+            if (orderByDesc)
+            {
+                return _context.DbSetOfPersons.GroupBy(p => p.FirstName)
+                    .OrderByDescending(p => p.Count())
+                    .Take(listLength)
+                    .Select(p => new KeyValuePair<string, int>(p.Key, p.Count()))
+                    .ToList();
+            }
+            else
+            {
+                return _context.DbSetOfPersons.GroupBy(p => p.FirstName)
+                    .OrderBy(p => p.Count())
+                    .Take(listLength)
+                    .Select(p => new KeyValuePair<string, int>(p.Key, p.Count()))
+                    .ToList();
+            }
+        }
+
         public Person AddPerson(PersonDto personDto)
         {
             var person = MapDtoToPerson(personDto);
@@ -93,7 +113,7 @@ namespace AdventureWorksAPI.Services
             );
 
             //var searchResult = _context.DbSetOfPersons.Where(person => person.AnyPropertyContainsKeyword(keyword));
-              
+
             return searchResult.ToList() ?? null;
         }
 
@@ -111,5 +131,7 @@ namespace AdventureWorksAPI.Services
                 IsActive = true
             };
         }
+
+
     }
 }
