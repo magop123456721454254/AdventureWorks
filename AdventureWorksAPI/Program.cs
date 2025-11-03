@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+#region Docker
 bool runningInDocker = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true"; // ? "host.docker.internal,1433" : "localhost\\SQLEXPRESS";
 
 string connectionString;
@@ -16,19 +17,9 @@ else
 {
     connectionString = "Server=localhost\\SQLEXPRESS;Database=AdventureWorks2016;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;";
 }
+#endregion
 
-builder.Services.AddDbContextFactory<AdventureWorksContext>(options =>
-    options.UseSqlServer(connectionString));
-
-//bool runningInDocker = string.Equals(
-//    global::System.Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER"),
-//    "true",
-//    StringComparison.OrdinalIgnoreCase
-//);
-
-Console.WriteLine($"[DEBUG] The server string used is: {connectionString}");
-Console.WriteLine($"[DEBUG] Running in Docker container is: {runningInDocker}");
-
+#region Builder
 builder.Services.AddDbContextFactory<AdventureWorksContext>(options => options.UseSqlServer(connectionString));
 
 builder.WebHost.UseUrls("http://0.0.0.0:5000");
@@ -52,14 +43,21 @@ builder.Services.AddCors(options =>
         });
 });
 
-
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "AdventureWorks API", Version = "v1" });
 });
 
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<Query>()
+    .AddProjections()
+    .AddFiltering()
+    .AddSorting();
+#endregion
+
+#region App
 var app = builder.Build();
 
 app.UseCors("MyNextJSCORS");
@@ -73,7 +71,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "AdventureWorks API V1"); c.InjectStylesheet("/swagger-ui/SwaggerDark.css"); });
 }
 
-
 app.UseAuthorization();
 app.MapControllers();
 
@@ -83,5 +80,7 @@ app.MapControllers();
 //    var persons = personService.GetPersonsList();
 //    return Results.Ok(persons);
 //});
+app.MapGraphQL();
 
 app.Run();
+#endregion
