@@ -5,3 +5,10 @@ AdventureWorksAPITest/bin/Debug/net9.0
 .vs/slnx.sqlite
 AdventureWorksAPITest/obj/Release/net9.0
 AdventureWorksAPITest/bin/Release/net9.0
+AdventureWorksAPITest/obj
+AdventureWorksGraphQL/bin
+AdventureWorksGraphQL/obj/Release
+AdventureWorksGraphQL/obj
+AdventureWorksGraphQL/.vs/AdventureWorksAPI
+AdventureWorksGraphQL/.vs/AdventureWorksGraphQL/CopilotIndices
+AdventureWorksGraphQL/.vs

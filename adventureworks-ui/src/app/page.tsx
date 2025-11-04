@@ -19,17 +19,14 @@ export default function PersonsPage() {
   });
 
   useEffect(() => {
-    fetch(`${apiUrl}/api/Person/GetPersonsList/`)
+    fetch(`${apiUrl}/api/Person/GetPersonsList/20`)
       .then((res) => res.json())
       .then((data) => setPersons(data));
   }, [apiUrl]);
 
   return (
-
     <div className="p-3 content-center">
-      <TabsComponent>
-      </TabsComponent>
-        {/* <table className="w-3/4 border border-gray-200">
+        <table className="w-3/4 border border-gray-200">
           <thead className="bg-sky-600">
             <tr>
               <th className="py-2 px-4 text-left border-b">ID</th>
@@ -50,7 +47,7 @@ export default function PersonsPage() {
               </tr>
             ))}
           </tbody>
-        </table> */}
+        </table>
     </div>
   );
 }
