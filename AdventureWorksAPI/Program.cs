@@ -74,13 +74,14 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 app.MapControllers();
 
+app.MapGraphQL();
+
+app.Run();
+#endregion
+
 // Minimal API example
 //app.MapGet("/person/GetPersonList", (IPersonService personService) =>
 //{
 //    var persons = personService.GetPersonsList();
 //    return Results.Ok(persons);
 //});
-app.MapGraphQL();
-
-app.Run();
-#endregion
