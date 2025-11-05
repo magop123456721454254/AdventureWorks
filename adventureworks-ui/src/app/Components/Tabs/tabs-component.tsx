@@ -4,8 +4,8 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import EditPersons from '../PersonsViews/edit-persons';
-import GetPersons from '../PersonsViews/get-persons';
+import EditPersons from '../personsViews/edit-persons';
+import GetPersons from '../personsViews/get-persons';
 
 export default function TabsComponent() {
   const [value, setValue] = React.useState('1');
