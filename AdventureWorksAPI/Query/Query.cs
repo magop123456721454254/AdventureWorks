@@ -6,10 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 public class Query
 {
+    [UsePaging]
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public IQueryable<Person> GetPersons(
+    public IQueryable<Person> GetPersonsEndpoint(
         [Service] IDbContextFactory<AdventureWorksContext> dbFactory)
     {
         var context = dbFactory.CreateDbContext();
