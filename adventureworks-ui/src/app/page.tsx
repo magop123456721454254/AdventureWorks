@@ -1,53 +1,44 @@
-// src/app/products/page.tsx
 'use client';
+import { ApolloClient, InMemoryCache, gql, ApolloProvider, useQuery } from '@apollo/client';
+export { ApolloClient, InMemoryCache, gql, ApolloProvider, useQuery };
+import { GET_PERSONS_LIST_NO_PARAMETER } from './functions/queries/personQueries';
+import { Person } from '@/app/models/personModel';
 
-import { useEffect, useState } from 'react';
-import { Person } from './Models/PersonModel';
-import TabsComponent from './Components/Tabs/tabs-component';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+// Define the shape of the GraphQL response
+interface PersonNode {
+  node: Person;
+}
+
+interface PersonsListResponse {
+  personsList: {
+    edges: PersonNode[];
+  };
+}
 
 export default function PersonsPage() {
-  const [persons, setPersons] = useState<Person[]>([]);
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-  fetch(`${apiUrl}/api/Person/GetPersonsList/`);
+  // Type the useQuery hook with the response shape
+  const { data, loading, error } = useQuery<PersonsListResponse>(
+    GET_PERSONS_LIST_NO_PARAMETER,
+    { variables: { amount: 5 } } // after removed since your query doesn't have it
+  );
 
-  const darkTheme = createTheme({
-    palette: {
-      mode: 'dark',
-    },
-  });
+  if (loading) return <html><body><p>Loading...</p></body></html>;
+  if (error) return <html><body><p>Error: {error.message}</p></body></html>;
 
-  useEffect(() => {
-    fetch(`${apiUrl}/api/Person/GetPersonsList/20`)
-      .then((res) => res.json())
-      .then((data) => setPersons(data));
-  }, [apiUrl]);
+  // Map edges to nodes
+  const nodes = data?.personsList.edges.map(edge => edge.node) ?? [];
 
   return (
-    <div className="p-3 content-center">
-        <table className="w-3/4 border border-gray-200">
-          <thead className="bg-sky-600">
-            <tr>
-              <th className="py-2 px-4 text-left border-b">ID</th>
-              <th className="py-2 px-4 text-left border-b">Title</th>
-              <th className="py-2 px-4 text-left border-b">First Nssssame</th>
-              <th className="py-2 px-4 text-left border-b">Middle Name</th>
-              <th className="py-2 px-4 text-left border-b">Last Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            {persons.map((p) => (
-              <tr key={p.businessEntityId} className="hover:bg-sky-800">
-                <td className="py-2 px-4 border-b">{p.businessEntityId}</td>
-                <td className="py-2 px-4 border-b">{p.title}</td>
-                <td className="py-2 px-4 border-b">{p.firstName}</td>
-                <td className="py-2 px-4 border-b">{p.middleName}</td>
-                <td className="py-2 px-4 border-b">{p.lastName}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-    </div>
+    <html>
+      <body>
+        <ul>
+          {nodes.map(person => (
+            <li key={person.businessEntityId}>
+              {person.title} {person.firstName} {person.personType}
+            </li>
+          ))}
+        </ul>
+      </body>
+    </html>
   );
 }

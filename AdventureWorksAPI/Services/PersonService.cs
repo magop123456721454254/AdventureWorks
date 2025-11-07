@@ -17,12 +17,12 @@ namespace AdventureWorksAPI.Services
 
         public IEnumerable<Person> GetPersonsList()
         {
-            return [.. _context.DbSetOfPersons.Take(5)];
+            return _context.DbSetOfPersons.Take(5).ToList();
         }
 
         public IEnumerable<Person> GetPersonsList(int amount)
         {
-            return [.. _context.DbSetOfPersons.Take(amount)];
+            return _context.DbSetOfPersons.Take(amount).ToList();
         }
 
         public Person? GetPerson(int businessIdentityId)

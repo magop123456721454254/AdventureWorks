@@ -68,7 +68,11 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.UseSwagger();
-    app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "AdventureWorks API V1"); c.InjectStylesheet("/swagger-ui/SwaggerDark.css"); });
+    app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "AdventureWorks API V1");
+            c.InjectStylesheet("/swagger-ui/SwaggerDark.css");
+        });
 }
 
 app.UseAuthorization();
