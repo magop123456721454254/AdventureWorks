@@ -16,4 +16,15 @@ public class Query
         var context = dbFactory.CreateDbContext();
         return context.DbSetOfPersons;
     }
+
+    [UsePaging]
+    [UseProjection]
+    [UseFiltering]
+    [UseSorting]
+    public List<Person> GetPersonsList(
+       [Service] IDbContextFactory<AdventureWorksContext> dbFactory, int amount)
+    {
+        var context = dbFactory.CreateDbContext();
+        return context.DbSetOfPersons.Take(amount).ToList();
+    }
 }
