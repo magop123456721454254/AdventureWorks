@@ -21,3 +21,18 @@ export const GET_PERSONS = gql`
     }
   }
 `;
+
+export const GET_PERSONS_LIST_NO_PARAMETER = gql`
+query($amount: Int!) {
+    personsList(amount: $amount) {
+        edges {
+            node {
+                businessEntityId
+                firstName
+                personType
+                title
+            }
+        }
+    }
+} 
+`;
