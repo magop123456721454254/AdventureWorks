@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client';
+"use client";
 import { useQuery } from '@apollo/client';
 import { GET_PERSONS_LIST_NO_PARAMETER } from './functions/queries/personQueries';
 import { Person } from '@/app/models/personModel';
