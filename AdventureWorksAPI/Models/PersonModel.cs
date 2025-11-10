@@ -24,5 +24,12 @@ namespace AdventureWorksAPI.Models
                 LastName != null && LastName.Contains(keyword) ||
                 Suffix != null && Suffix.Contains(keyword);
         }
+
+    }
+
+    public class RankedItem(string key, int count)
+    {
+        public string Key { get; set; } = key;
+        public int Count { get; set; } = count;
     }
 }
