@@ -8,57 +8,70 @@ namespace AdventureWorksAPI.Services
 {
     public class PersonService : IPersonService
     {
-        private AdventureWorksContext _context;
+        private readonly AdventureWorksContext _context;
 
         public PersonService(AdventureWorksContext context)
         {
             _context = context;
         }
 
-        public IEnumerable<Person> GetPersonsList()
+        #region GET
+        public IQueryable<Person> GetPersonsList()
         {
-            return _context.DbSetOfPersons.Take(5).ToList();
+            return _context.DbSetOfPersons.Take(5);
         }
 
-        public IEnumerable<Person> GetPersonsList(int amount)
+        public IQueryable<Person> GetPersonsList(int amount)
         {
-            return _context.DbSetOfPersons.Take(amount).ToList();
+            return _context.DbSetOfPersons.Take(amount);
         }
 
-        public Person? GetPerson(int businessIdentityId)
+        public IQueryable<Person?> GetPerson(int businessIdentityId)
         {
-            var obj = _context.DbSetOfPersons.Find(businessIdentityId);
-
-            return obj ?? null;
+            return _context.DbSetOfPersons.Where(p =>
+                p.BusinessEntityId == businessIdentityId);
         }
 
-        public Person AddPerson(PersonDto personDto)
+        public IQueryable<Person> FindPersons(string keyword)
         {
-            var person = MapDtoToPerson(personDto);
-            _context.DbSetOfPersons.Add(person);
-            _context.SaveChanges();
-            return person;
+            var searchResult = _context.DbSetOfPersons.Where(person =>
+                person.PersonType != null && person.PersonType.Contains(keyword) ||
+                person.Title != null && person.Title.Contains(keyword) ||
+                person.FirstName != null && person.FirstName.Contains(keyword) ||
+                person.MiddleName != null && person.MiddleName.Contains(keyword) ||
+                person.LastName != null && person.LastName.Contains(keyword) ||
+                person.Suffix != null && person.Suffix.Contains(keyword)
+            );
+
+            return searchResult;
         }
 
-
-        public IEnumerable<KeyValuePair<string, int>> GetRankedOccurances(string propertyName, int listLength, bool orderByDesc)
+        public IQueryable<RankedItem> GetRankedOccurances(string propertyName, int listLength, bool orderByDesc)
         {
             if (orderByDesc)
             {
                 return _context.DbSetOfPersons.GroupBy(p => p.FirstName)
                     .OrderByDescending(p => p.Count())
                     .Take(listLength)
-                    .Select(p => new KeyValuePair<string, int>(p.Key ?? string.Empty, p.Count()))
-                    .ToList();
+                    .Select(p => new RankedItem(p.Key ?? string.Empty, p.Count()));
             }
             else
             {
                 return _context.DbSetOfPersons.GroupBy(p => p.FirstName)
                     .OrderBy(p => p.Count())
                     .Take(listLength)
-                    .Select(p => new KeyValuePair<string, int>(p.Key ?? string.Empty, p.Count()))
-                    .ToList();
+                    .Select(p => new RankedItem(p.Key ?? string.Empty, p.Count()));
             }
+        }
+        #endregion
+
+        #region POST
+        public Person AddPerson(PersonDto personDto)
+        {
+            var person = MapDtoToPerson(personDto);
+            _context.DbSetOfPersons.Add(person);
+            _context.SaveChanges();
+            return person;
         }
 
         public bool SoftDeletePerson(int businessIdentityId)
@@ -103,22 +116,6 @@ namespace AdventureWorksAPI.Services
             return _context.SaveChanges() > 0;
         }
 
-        public IEnumerable<Person>? FindPersons(string keyword)
-        {
-            var searchResult = _context.DbSetOfPersons.Where(person =>
-                person.PersonType != null && person.PersonType.Contains(keyword) ||
-                person.Title != null && person.Title.Contains(keyword) ||
-                person.FirstName != null && person.FirstName.Contains(keyword) ||
-                person.MiddleName != null && person.MiddleName.Contains(keyword) ||
-                person.LastName != null && person.LastName.Contains(keyword) ||
-                person.Suffix != null && person.Suffix.Contains(keyword)
-            );
-
-            //var searchResult = _context.DbSetOfPersons.Where(person => person.AnyPropertyContainsKeyword(keyword));
-              
-            return searchResult.ToList() ?? null;
-        }
-
         private static Person MapDtoToPerson(PersonDto personDto)
         {
             return new Person
@@ -133,5 +130,8 @@ namespace AdventureWorksAPI.Services
                 IsActive = true
             };
         }
+
+
+        #endregion
     }
 }
