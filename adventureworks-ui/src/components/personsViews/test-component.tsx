@@ -1,6 +1,6 @@
 'use client';
 import { useQuery, gql} from '@apollo/client';
-import { GET_PERSONS } from '../../functions/queries/personQueries';
+import { GET_PERSONS } from '../../functions/queries/person-queries';
 import { Person } from '../../models/personModel';
 
 export default function PersonsPage() {

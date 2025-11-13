@@ -1,7 +1,7 @@
 'use client';
 import { ApolloClient, InMemoryCache, gql, ApolloProvider, useQuery } from '@apollo/client';
 export { ApolloClient, InMemoryCache, gql, ApolloProvider, useQuery };
-import { GET_PERSONS_LIST_NO_PARAMETER } from '../functions/queries/personQueries';
+import { GET_PERSONS_LIST } from '../functions/queries/person-queries';
 import { Person } from '../models/personModel';
 
 // Define the shape of the GraphQL response
@@ -18,7 +18,7 @@ interface PersonsListResponse {
 export default function PersonsPage() {
   // Type the useQuery hook with the response shape
   const { data, loading, error } = useQuery<PersonsListResponse>(
-    GET_PERSONS_LIST_NO_PARAMETER,
+    GET_PERSONS_LIST,
     { variables: { amount: 5 } } // after removed since your query doesn't have it
   );
 
