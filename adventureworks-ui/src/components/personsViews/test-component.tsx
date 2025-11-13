@@ -1,7 +1,7 @@
 'use client';
 import { useQuery, gql} from '@apollo/client';
 import { GET_PERSONS } from '../../functions/queries/personQueries';
-import { Person } from '@/app/models/personModel';
+import { Person } from '../../models/personModel';
 
 export default function PersonsPage() {
   const { data, loading, error, fetchMore } = useQuery(GET_PERSONS, {
