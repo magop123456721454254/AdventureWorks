@@ -2,7 +2,7 @@
 import { ApolloClient, InMemoryCache, gql, ApolloProvider, useQuery } from '@apollo/client';
 export { ApolloClient, InMemoryCache, gql, ApolloProvider, useQuery };
 import { GET_PERSONS_LIST_NO_PARAMETER } from './functions/queries/personQueries';
-import { Person } from '@/app/models/personModel';
+import { Person } from './models/personModel';
 
 // Define the shape of the GraphQL response
 interface PersonNode {
